@@ -68,10 +68,12 @@ extension PageboyViewController: UIPageViewControllerDelegate {
                                             didCancelScrollToPageAt: expectedIndex,
                                             returnToPageAt: previousIndex)
             return }
-        
+
+        // removed {index == expectedTransitionIndex } check to fix fast scrolling bug
+        // Fast scrolling bug occurs when
+        // Scroll twice to the right, then triple back to the left
         guard let viewController = pageViewController.viewControllers?.first,
-            let index = viewControllerIndexMap.index(for: viewController),
-            index == expectedTransitionIndex else {
+            let index = viewControllerIndexMap.index(for: viewController) else {
             return }
 
         updateCurrentPageIndexIfNeeded(index)
